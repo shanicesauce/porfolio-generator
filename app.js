@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
+const generatePage = require('./page-template');
 
 
 const promptUser = () => {
@@ -92,7 +94,7 @@ return inquirer
    {
       type:'input',
       name:'link',
-      message:'Enter your Github Username (Required)',
+      message:'Enter your Github link (Required)',
       validate: nameInput => {
          if (nameInput){
             return true
@@ -127,20 +129,62 @@ return inquirer
 }
 ;
 
-promptUser()
-.then(promptProject)
-.then(portfolioData => {
-   console.log(portfolioData)
-});
 
-// const fs = require('fs');
 
-// const generatePage = require('./page-template');
+const mockData = {
+   name: 'Shanice',
+   github: 'shanicesauce',
+   confirmAbout: true,
+   about:
+     'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et.',
+   projects: [
+     {
+       name: 'Run Buddy',
+       description:
+         'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.',
+       languages: ['HTML', 'CSS'],
+       link: 'https://github.com/shanicesauce/run-buddy',
+       feature: true,
+       confirmAddProject: true
+     },
+     {
+       name: 'Taskinator',
+       description:
+         'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.',
+       languages: ['JavaScript', 'HTML', 'CSS'],
+       link: 'https://github.com/shanicesauce/taskinator',
+       feature: true,
+       confirmAddProject: true
+     },
+     {
+       name: 'Taskmaster Pro',
+       description:
+         'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque. Nulla eget fringilla nulla. Integer gravida magna mi, id efficitur metus tempus et. Nam fringilla elit dapibus pellentesque cursus.',
+       languages: ['JavaScript', 'jQuery', 'CSS', 'HTML', 'Bootstrap'],
+       link: 'https://github.com/shanicesauce/taskmaster-pro',
+       feature: false,
+       confirmAddProject: true
+     },
+     {
+       name: 'Robot Gladiators',
+       description:
+         'Duis consectetur nunc nunc. Morbi finibus non sapien nec pharetra. Fusce nec dignissim orci, ac interdum ipsum. Morbi mattis justo sed commodo pellentesque.',
+       languages: ['JavaScript'],
+       link: 'https://github.com/shanicesauce/robot-gladiators',
+       feature: false,
+       confirmAddProject: false
+     }
+   ]
+ };
 
-// const pageHtml = generatePage(name,github);
+ // promptUser()
+// .then(promptProject)
+// .then(portfolioData => {
+   const pageHtml = generatePage(mockData);
 
-// fs.writeFile('./index.html', pageHtml, err => {
-//    if (err) throw err;
+   fs.writeFile('./index.html', pageHtml, err => {
+   if (err) throw err;
 
-//    console.log('Portfolio complete! Checkout index.html to see the output!');
-// })
+   console.log('Portfolio complete! Checkout index.html to see the output!');
+})
+// });
